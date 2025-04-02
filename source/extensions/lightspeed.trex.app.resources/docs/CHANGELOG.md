@@ -1,6 +1,14 @@
 # Changelog
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/).
 
+## [1.15.5]
+## Changed
+- Stage Manager: Added LSS Materials Tab interaction plugin wrapper
+
+## [1.15.4]
+## Added
+- Added ingested images to test project
+
 ## [1.15.3]
 ## Fixed
 - Fixed the Mixed icon to be colorable in the styles

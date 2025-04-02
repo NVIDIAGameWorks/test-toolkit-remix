@@ -10,6 +10,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Added
 - Created 1.0.0 build
 - Added release notes for 1.0.0
+- Added tests for REST API endpoints
+- REMIX-3891: Added Material Property Widget control with Stage Manager Materials Tab
 
 ### Changed
 - Improved the documentation layout and contents
@@ -19,8 +21,18 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Fixed
 - Fixed tests for the `omni.flux.validator.mass.widget` extension
 - Fixed `get_texture_material_inputs` API endpoint for Kit 106.5
+- Fixed `is_valid_texture_prim` API validator for Kit 106.5
+- Redirect documentation pages that were moved to avoid 404 errors
+- REMIX-3869: Made extension lowercase for texture validation
+- Fixed Quick Start Guide link on the home page
+- REMIX-3900: Added ImageWithProvider to better display single channel textures
+- REMIX-3581: Fix multi-selection visibility toggle to have consistent behavior
+- REMIX-4043: Fixed layer creation transferring metadata from parent layer
+- REMIX-4073: Fixed Material Property Widget saving overrides onto instances instead of meshes
+- Fixed Toolkit Build Dependencies to allow building externally
 
 ### Removed
+- Cleaned up legacy code and unused files
 
 ## [1.0.0]
 
