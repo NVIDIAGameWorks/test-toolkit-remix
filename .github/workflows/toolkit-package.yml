@@ -18,7 +18,7 @@ jobs:
         VERSION=$(cat VERSION.md | head -n 1 | xargs)
         
         # Get current branch name and commit SHA
-        BRANCH_NAME="github_publishing  "
+        BRANCH_NAME="github_publishing"
         SHORT_SHA="0e87247b"
         
         # Construct the filename
