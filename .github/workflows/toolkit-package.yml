@@ -27,8 +27,17 @@ jobs:
         echo "Downloading package: $FILENAME"
         echo "Version: $VERSION, Branch: $BRANCH_NAME, SHA: $SHORT_SHA"
         
-        # Download from packman
-        if ./tools/packman/packman pull -r rtx-remix-external "$FILENAME"; then
+        # Create project.xml for packman pull
+        cat > project.xml << EOF
+        <project toolsVersion="7.6">
+          <dependency name="rtx_remix" copyPath="_artifacts/${FILENAME}">
+            <package name="rtx_remix" version="${VERSION}+${BRANCH_NAME}.${SHORT_SHA}.gl.windows-x86_64.release" />
+          </dependency>
+        </project>
+        EOF
+        
+        # Download from packman using project.xml
+        if ./tools/packman/packman pull project.xml; then
           echo "✅ Successfully downloaded $FILENAME"
           echo "SHOULD_UPLOAD=true" >> $GITHUB_ENV
           echo "FILENAME=$FILENAME" >> $GITHUB_ENV
@@ -41,5 +50,5 @@ jobs:
       if: env.SHOULD_UPLOAD == 'true'
       uses: actions/upload-artifact@v4
       with:
-        name: rtx-remix-package
-        path: ${{ env.FILENAME }}
+        name: ${{ env.FILENAME }}
+        path: _artifacts/${{ env.FILENAME }}
