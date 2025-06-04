@@ -14,31 +14,26 @@ jobs:
     
     - name: Download package
       run: |
-        # Get current commit SHA (first 8 characters)
-        SHORT_SHA="97eb63e0"
+        # Read version from VERSION.md
+        VERSION=$(cat VERSION.md | head -n 1 | xargs)
         
-        echo "Current commit SHA: $SHORT_SHA"
+        # Get current branch name and commit SHA
+        BRANCH_NAME="github_publishing  "
+        SHORT_SHA="0e87247b"
         
-        # Download with original filename preserved
-        curl -L -O -J "https://d1oqksizpb0e3d.cloudfront.net/rtx_remix@latest"
+        # Construct the filename
+        FILENAME="rtx_remix@${VERSION}+${BRANCH_NAME}.${SHORT_SHA}.gl.windows-x86_64.release"
         
-        # Find the downloaded file
-        DOWNLOADED_FILE=$(ls rtx_remix@*.zip 2>/dev/null | head -n 1)
+        echo "Downloading package: $FILENAME"
+        echo "Version: $VERSION, Branch: $BRANCH_NAME, SHA: $SHORT_SHA"
         
-        if [[ -f "$DOWNLOADED_FILE" ]]; then
-          echo "Downloaded file: $DOWNLOADED_FILE"
-          
-          # Check if filename contains the commit SHA
-          if [[ "$DOWNLOADED_FILE" == *"$SHORT_SHA"* ]]; then
-            echo "✅ Filename contains commit SHA $SHORT_SHA - will upload"
-            echo "SHOULD_UPLOAD=true" >> $GITHUB_ENV
-            echo "FILENAME=$DOWNLOADED_FILE" >> $GITHUB_ENV
-          else
-            echo "❌ Filename does not contain commit SHA $SHORT_SHA - skipping upload"
-            echo "SHOULD_UPLOAD=false" >> $GITHUB_ENV
-          fi
+        # Download from packman
+        if ./tools/packman/packman pull -r rtx-remix-external "$FILENAME"; then
+          echo "✅ Successfully downloaded $FILENAME"
+          echo "SHOULD_UPLOAD=true" >> $GITHUB_ENV
+          echo "FILENAME=$FILENAME" >> $GITHUB_ENV
         else
-          echo "❌ No rtx_remix@*.zip file found"
+          echo "❌ Failed to download $FILENAME from packman"
           echo "SHOULD_UPLOAD=false" >> $GITHUB_ENV
         fi
     
