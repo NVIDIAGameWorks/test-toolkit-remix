@@ -9,11 +9,23 @@ jobs:
     runs-on: ubuntu-latest
     
     steps:
-    - name: Check free space
-      run: df -h
 
     - name: Free disk space
-      run: curl -fsSL https://raw.githubusercontent.com/kou/arrow/e49d8ae15583ceff03237571569099a6ad62be32/ci/scripts/util_free_space.sh | bash
+      run: |
+        sudo rm -rf \
+          /usr/local/aws-sam-cil \
+          /usr/local/julia1.12.2 \
+          /usr/local/lib/android \
+          /usr/local/lib/heroku \
+          /usr/local/lib/node_modules \
+          /opt/hostedtoolcache/CodeQL \
+          /opt/hostedtoolcache/go \
+          /opt/hostedtoolcache/PyPy \
+          /opt/hostedtoolcache/node \
+          /usr/local/bin/oc \
+          /opt/az \
+          /opt/microsoft/powershell
+        sudo apt purge -y firefox google-chrome-stable microsoft-edge-stable
 
     - name: Checkout repository
       uses: actions/checkout@v4
@@ -37,7 +49,7 @@ jobs:
         cat > project.xml << EOF
         <project toolsVersion="7.6">
           <dependency name="rtx_remix" copyPath="_artifacts/${FILENAME}">
-            <package name="rtx_remix" version="${VERSION}+${BRANCH_NAME}.${SHORT_SHA}.gl.windows-x86_64.release" />
+            <package name="rtx_remix" version="1.2.4+main.cfef2676.gl.windows-x86_64.release" />
           </dependency>
         </project>
         EOF
