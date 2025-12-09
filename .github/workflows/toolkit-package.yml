@@ -9,6 +9,12 @@ jobs:
     runs-on: ubuntu-latest
     
     steps:
+    - name: Check free space
+      run: df -h
+
+    - name: Free disk space
+      run: curl -fsSL https://raw.githubusercontent.com/kou/arrow/e49d8ae15583ceff03237571569099a6ad62be32/ci/scripts/util_free_space.sh | bash
+
     - name: Checkout repository
       uses: actions/checkout@v4
     
@@ -19,7 +25,7 @@ jobs:
         
         # Get current branch name and commit SHA
         BRANCH_NAME="github_publishing"
-        SHORT_SHA="0e87247b"
+        SHORT_SHA="cc7f198"
         
         # Construct the filename
         FILENAME="rtx_remix@${VERSION}+${BRANCH_NAME}.${SHORT_SHA}.gl.windows-x86_64.release"

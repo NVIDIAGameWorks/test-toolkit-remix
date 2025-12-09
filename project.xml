@@ -1,0 +1,5 @@
+<project toolsVersion="7.0">
+  <dependency name="rtx_remix" copyPath="_artifacts">
+    <package name="rtx_remix" version="1.0.0+github_publishing.0e87247b.gl.windows-x86_64.release" />
+  </dependency>
+</project>
